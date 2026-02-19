@@ -12,15 +12,16 @@ import { ProcessStep } from "@/types";
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "Home", href: "#" },
-  { label: "Services", href: "#services" },
   { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "How Works", href: "#how_it_works" },
   { label: "Contact", href: "#contact" },
 ];
 
 export const HERO_CONTENT = {
-  title: "Transforming Global Workforce Mobility",
+  title: "Connecting Talent to Global Opportunities",
   subtitle:
-    "Connecting blue and grey collar talent to international opportunities through a seamless digital marketplace.",
+    "Kovon empowers skilled professionals to access trusted international careers, unlocking a world of growth, stability, and success.",
   primaryCTA: "Get Started",
   secondaryCTA: "Learn More",
 };
@@ -70,7 +71,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
     step: 3,
     title: "Apply & Get Matched",
     description:
-      "Employers review applications and connect with suitable candidates efficiently.",
+      "Employers review applications and connect with suitable opportunities efficiently.",
   },
   {
     step: 4,
@@ -78,12 +79,19 @@ export const PROCESS_STEPS: ProcessStep[] = [
     description:
       "Seamless documentation and onboarding process for international placements.",
   },
+  {
+    step: 5,
+    title: "Receive Offer",
+    description:
+      "Receive confirmed job offers and take the next step in the career.",
+  },
 ];
 
 
 export const FOOTER_LINKS = [
   { label: "Home", href: "#" },
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "#about" },           // match AboutUs section id
+  { label: "Services", href: "#services" },      // match your FeaturesSection id
+  { label: "How Works", href: "#how_it_works" }, // match HowItWorks id
+  { label: "Contact", href: "#contact" },        // match ContactSection id
 ];
