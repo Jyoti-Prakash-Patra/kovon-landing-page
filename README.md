@@ -4,7 +4,7 @@ Kovon is a modern global talent marketplace built with Next.js 16, connecting bl
 
 ---
 
-# 📌 Submission Requirements
+# 📌 Requirements
 
 ## 🔗 1. GitHub Repository Link
 
@@ -347,7 +347,7 @@ npm run lint     # Run ESLint
 
 # 👩‍💻 Author
 
-Your Name  
+JYOTI PRAKASH PATRA  
 GitHub: https://github.com/Jyoti-Prakash-Patra
 
 ---
