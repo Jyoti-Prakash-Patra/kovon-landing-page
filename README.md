@@ -16,16 +16,10 @@ https://github.com/Jyoti-Prakash-Patra/kovon-landing-page.git
 ## 🌐 2. Deployed Live URL
 
 Live Project:  
-https://YOUR_DEPLOYED_URL.vercel.app
+https://kovon-landing-pages.vercel.app/
 
 ---
 
-## 🎥 3. Screen Recording Walkthrough (1–2 Minutes)
-
-Walkthrough Video:  
-https://YOUR_VIDEO_LINK.com
-
----
 
 # 🧰 Tech Stack
 
