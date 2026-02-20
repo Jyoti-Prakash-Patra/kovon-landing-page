@@ -12,116 +12,147 @@ const ContactSection = () => {
     message: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [buttonState, setButtonState] = useState<"default" | "success">("default");
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Validate field as user types (for email only)
+    if (name === "email") {
+      const trimmed = value.trim();
+      if (!trimmed) setErrors((prev) => ({ ...prev, email: "Email is required" }));
+      else if (!trimmed.includes("@")) setErrors((prev) => ({ ...prev, email: "Email must contain @" }));
+      else {
+        const parts = trimmed.split("@");
+        if (!parts[1] || !parts[1].includes(".")) {
+          setErrors((prev) => ({
+            ...prev,
+            email: "Email must contain a valid domain (e.g., gmail.com)",
+          }));
+        } else setErrors((prev) => ({ ...prev, email: "" }));
+      }
+    } else {
+      setErrors((prev) => ({ ...prev, [name]: "" })); // clear other field errors on typing
+    }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const validateAll = () => {
+    const newErrors: typeof errors = { name: "", email: "", message: "" };
+
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+
+    const email = formData.email.trim();
+    if (!email) newErrors.email = "Email is required";
+    else if (!email.includes("@")) newErrors.email = "Email must contain @";
+    else {
+      const parts = email.split("@");
+      if (!parts[1] || !parts[1].includes(".")) newErrors.email = "Email must contain a valid domain (e.g., gmail.com)";
+    }
+
+    if (!formData.message.trim()) newErrors.message = "Message is required";
+
+    setErrors(newErrors);
+
+    return !newErrors.name && !newErrors.email && !newErrors.message;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Contact form submitted:", formData);
-    alert("Thank you! Your message has been sent.");
-    setFormData({ name: "", email: "", message: "" });
+    if (!validateAll()) return; // stop if there are errors
+
+    setButtonState("success");
+    setTimeout(() => {
+      setButtonState("default");
+      setFormData({ name: "", email: "", message: "" });
+    }, 2000);
   };
 
   return (
     <section
       id="contact"
-      className={`py-16 transition-colors duration-500 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-      }`}
+      className={`py-16 transition-colors duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
     >
       <div className="max-w-xl mx-auto px-6">
-
-        {/* Heading */}
-        <h2
-          className={`text-4xl font-bold text-center mb-8 ${
-            darkMode ? "text-white" : "text-gray-900"
-          }`}
-        >
+        <h2 className={`text-4xl font-bold text-center mb-8 ${darkMode ? "text-white" : "text-gray-900"}`}>
           Contact Us
         </h2>
 
-        {/* Gradient Border Container */}
-        <div
-          className={`p-[3px] rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-800`}
-        >
+        <div className="p-[3px] rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-800">
           <form
             onSubmit={handleSubmit}
             className={`rounded-lg p-8 space-y-6 shadow-lg transition-colors duration-500 ${
               darkMode ? "bg-gray-900" : "bg-white"
             }`}
           >
+            {/* Name */}
             <div>
-              <label
-                className={`block mb-2 font-medium ${
-                  darkMode ? "text-gray-200" : "text-gray-800"
-                }`}
-              >
-                Name
-              </label>
+              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Name</label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                required
                 className={`w-full border rounded-md p-3 transition-colors duration-300 ${
                   darkMode
                     ? "border-gray-400 bg-gray-800 text-white focus:ring-2 focus:ring-blue-500"
                     : "border-gray-500 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500"
-                }`}
+                } ${errors.name ? "border-red-500" : ""}`}
               />
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
 
+            {/* Email */}
             <div>
-              <label
-                className={`block mb-2 font-medium ${
-                  darkMode ? "text-gray-200" : "text-gray-800"
-                }`}
-              >
-                Email
-              </label>
+              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Email</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
                 className={`w-full border rounded-md p-3 transition-colors duration-300 ${
                   darkMode
                     ? "border-gray-400 bg-gray-800 text-white focus:ring-2 focus:ring-blue-500"
                     : "border-gray-500 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500"
-                }`}
+                } ${errors.email ? "border-red-500" : ""}`}
               />
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
 
+            {/* Message */}
             <div>
-              <label
-                className={`block mb-2 font-medium ${
-                  darkMode ? "text-gray-200" : "text-gray-800"
-                }`}
-              >
-                Message
-              </label>
+              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Message</label>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                required
                 rows={5}
                 className={`w-full border rounded-md p-3 transition-colors duration-300 ${
                   darkMode
                     ? "border-gray-400 bg-gray-800 text-white focus:ring-2 focus:ring-blue-500"
                     : "border-gray-500 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500"
-                }`}
+                } ${errors.message ? "border-red-500" : ""}`}
               />
+              {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-blue-700 transition"
+              className={`w-full font-semibold px-6 py-3 rounded-md transition-colors ${
+                buttonState === "success"
+                  ? "bg-green-500 text-white cursor-not-allowed"
+                  : "bg-blue-600 text-white hover:bg-blue-800 hover:cursor-pointer"
+              }`}
+              disabled={buttonState === "success"}
             >
-              Send Message
+              {buttonState === "success" ? "Message Sent" : "Send Message"}
             </button>
           </form>
         </div>
