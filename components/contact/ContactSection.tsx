@@ -20,11 +20,14 @@ const ContactSection = () => {
 
   const [buttonState, setButtonState] = useState<"default" | "success">("default");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // Handle input change and live validation
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Validate field as user types (for email only)
+    // Inline email validation
     if (name === "email") {
       const trimmed = value.trim();
       if (!trimmed) setErrors((prev) => ({ ...prev, email: "Email is required" }));
@@ -39,12 +42,14 @@ const ContactSection = () => {
         } else setErrors((prev) => ({ ...prev, email: "" }));
       }
     } else {
-      setErrors((prev) => ({ ...prev, [name]: "" })); // clear other field errors on typing
+      // Clear errors for other fields on typing
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
+  // Full validation before submit
   const validateAll = () => {
-    const newErrors: typeof errors = { name: "", email: "", message: "" };
+    const newErrors = { name: "", email: "", message: "" };
 
     if (!formData.name.trim()) newErrors.name = "Name is required";
 
@@ -59,13 +64,13 @@ const ContactSection = () => {
     if (!formData.message.trim()) newErrors.message = "Message is required";
 
     setErrors(newErrors);
-
     return !newErrors.name && !newErrors.email && !newErrors.message;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Submit handler with proper typing
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validateAll()) return; // stop if there are errors
+    if (!validateAll()) return; // Stop if errors exist
 
     setButtonState("success");
     setTimeout(() => {
@@ -77,10 +82,16 @@ const ContactSection = () => {
   return (
     <section
       id="contact"
-      className={`py-16 transition-colors duration-500 ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
+      className={`py-16 transition-colors duration-500 ${
+        darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
     >
       <div className="max-w-xl mx-auto px-6">
-        <h2 className={`text-4xl font-bold text-center mb-8 ${darkMode ? "text-white" : "text-gray-900"}`}>
+        <h2
+          className={`text-4xl font-bold text-center mb-8 ${
+            darkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
           Contact Us
         </h2>
 
@@ -93,7 +104,9 @@ const ContactSection = () => {
           >
             {/* Name */}
             <div>
-              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Name</label>
+              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+                Name
+              </label>
               <input
                 type="text"
                 name="name"
@@ -110,7 +123,9 @@ const ContactSection = () => {
 
             {/* Email */}
             <div>
-              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Email</label>
+              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+                Email
+              </label>
               <input
                 type="email"
                 name="email"
@@ -127,7 +142,9 @@ const ContactSection = () => {
 
             {/* Message */}
             <div>
-              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Message</label>
+              <label className={`block mb-2 font-medium ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+                Message
+              </label>
               <textarea
                 name="message"
                 value={formData.message}
@@ -152,7 +169,7 @@ const ContactSection = () => {
               }`}
               disabled={buttonState === "success"}
             >
-              {buttonState === "success" ? "Message Sent" : "Send Message"}
+              {buttonState === "success" ? "Message Sent Successfully" : "Send Message"}
             </button>
           </form>
         </div>
