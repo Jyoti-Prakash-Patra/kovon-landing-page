@@ -90,8 +90,8 @@ export const PROCESS_STEPS: ProcessStep[] = [
 
 export const FOOTER_LINKS = [
   { label: "Home", href: "#" },
-  { label: "About", href: "#about" },           // match AboutUs section id
-  { label: "Services", href: "#services" },      // match your FeaturesSection id
-  { label: "How Works", href: "#how_it_works" }, // match HowItWorks id
-  { label: "Contact", href: "#contact" },        // match ContactSection id
+  { label: "About", href: "#about" },           
+  { label: "Services", href: "#services" },      
+  { label: "How Works", href: "#how_it_works" }, 
+  { label: "Contact", href: "#contact" },        
 ];

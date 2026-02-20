@@ -18,32 +18,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
-
-
-
-
-/*import type { Metadata } from "next";
-import "./globals.css";
-import ThemeRegistry from "@/components/theme-registry/ThemeRegistry";
-
-export const metadata: Metadata = {
-  title: "Kovon | Global Talent Marketplace",
-  description: "Connecting skilled professionals with verified global opportunities.",
-  keywords: ["global jobs", "international hiring", "workforce mobility", "talent marketplace"],
-  openGraph: {
-    title: "Kovon | Global Talent Marketplace",
-    description: "Connecting skilled professionals with verified global opportunities.",
-    type: "website",
-  },
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" className="scroll-smooth">
-      <body className="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-500">
-        <ThemeRegistry>{children}</ThemeRegistry>
-      </body>
-    </html>
-  );
-}*/
